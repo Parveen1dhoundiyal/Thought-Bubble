@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Posts - Blogi</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Thought Bubble Logo" class="logo-image">
+            <h1 class="logo-text"><span>Thought </span>Bubble</h1>
+        </div>
+        <i class="fa fa-bars menu-toggle"></i>
+        <ul class="nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/all-posts">Post</a></li>
+            <li><a href="#">About</a></li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-user"></i>
+                    {% if session.username %}
+                    {{ session.username }}
+                    {% endif %}
+                    <i class="fa fa-chevron-down"></i>
+                </a>
+                <ul>
+                    <li><a href="/dashboard">DashBoard</a></li>
+                    <li><a href="/logout" class="">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </header>
+
+    <div class="page-wrapper">
+        <div class="content clearfix">
+            <div class="main-content">
+                <h1 class="all-posts-title">All Posts</h1>
+                {% for post in posts %}
+                <div class="post">
+                    <div class="post-preview">
+                        <h2><a href="{{ url_for('show_post', post_id=post.id) }}">{{ post.title }}</a></h2>
+                        <i class="far fa-user"> {{ post.username }}</i>
+                        <i class="far fa-calendar"> {{ post.date }}</i>
+                        <p class="preview-text">{{ post.excerpt }}</p>
+                        <a href="{{ url_for('show_post', post_id=post.id) }}" class="btn read-more">Read More</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="sidebar">
+                
+                <div class="section-topics">
+                    <h2 class="section-title">Categories</h2>
+                    <ul>
+                        {% for topic in categories %}
+                        <li><a href="{{ url_for('all_posts', category=topic) }}">{{ topic }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

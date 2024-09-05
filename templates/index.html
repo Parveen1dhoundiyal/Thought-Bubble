@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thought Bubble</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Thought Bubble Logo" class="logo-image">
+            <h1 class="logo-text"><span>Thought </span>Bubble</h1>
+        </div>
+        <i class="fa fa-bars menu-toggle"></i>
+        <ul class="nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-user"></i>
+                    {% if session.username %}
+                    {{ session.username }}
+                    {% endif %}
+                    <i class="fa fa-chevron-down"></i>
+                </a>
+                <ul>
+                    <li><a href="/dashboard">DashBoard</a></li>
+                    <li><a href="/logout" class="">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </header>
+    <div class="page-wrapper">
+        <!-- Trending Posts Section -->
+        <div class="post-slider">
+            <h1 class="slider-title">Trending Posts</h1>
+            <button class="slick-prev"><i class="fas fa-chevron-left"></i></button>
+            <div class="post-slider-container">
+                {% for post in trending_posts %}
+                <div class="post">
+                    <div class="post-info">
+                        <h2><a href="{{ url_for('show_post', post_id=post.id) }}">{{ post.title }}</a></h2>
+                        <i class="far fa-user"> {{ post.username }}</i>
+                        <i class="far fa-calendar" style="margin-left: 5px;"> {{ post.date }}</i>
+                        <i class="far fa-tag" style="display: block; margin-top: 5px;"> {{ post.category }}</i>
+                        <p>{{ post.excerpt }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button class="slick-next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    
+        <!-- Button to All Posts Page -->
+        <div class="all-posts-button">
+            <a href="{{ url_for('all_posts') }}" class="btn" style="float: right;">View All Posts</a>
+        </div>
+    </div>
+    
+
+    <!-- Footer -->
+<div class="footer">
+    <div class="footer-content">
+        <div class="footer-section about">
+            <h1 class="logo-text" style="color: white;">Blogi</h1>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                Pariatur, dicta ex? Fugit ad excepturi non obcaecati laborum. Inventore illo maxime, 
+                nisi recusandae veritatis, eos provident vero at ipsum, minus placeat.
+            </p>
+            <div class="contact">
+                <span><i class="fas fa-phone"></i>&nbsp; 123-456-789</span>
+                <span><i class="fas fa-envelope"></i>&nbsp; info@blogi.com</span>
+            </div>
+            <div class="socials">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div class="footer-section links">
+            <h2>Quick Links</h2>
+            <br>
+            <ul>
+                <a href=""><li>Events</li></a>
+                <a href=""><li>Team</li></a>
+                <a href=""><li>Mentors</li></a>
+                <a href=""><li>Gallery</li></a>
+                <a href=""><li>Terms and Conditions</li></a>
+            </ul>
+        </div>
+        <div class="footer-section contact-form">
+            <h2>Contact Us</h2>
+            <br>
+            <form action="index.html" method="post">
+                <input type="email" name="email" class="text-input contact-input" placeholder="Your email address...">
+                <textarea name="message" class="text-input contact-input" placeholder="Your message..."></textarea>
+                <button type="submit" class="btn btn-big">
+                    <i class="fas fa-envelope"></i> 
+                    Send
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; Designed by Parveen Dhoundiyal
+    </div>
+</div>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
